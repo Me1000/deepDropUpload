@@ -95,7 +95,7 @@ DCFileUploadDelegate protocol
 
 - (void)cancel {
 	isUploading = NO;
-    [fileUploadConnection cancel];
+    [uploadConnection cancel];
 }
 
 @end
