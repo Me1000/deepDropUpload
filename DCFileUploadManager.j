@@ -60,7 +60,10 @@ SharedFileUploadManager = nil;
 }
 
 - (void)fileUploadDidBegin:(DCFileUpload)theFileUpload {
-	[self didChange];
+    if ([delegate respondsToSelector:@selector(fileUploadDidBegin:)])
+        [delegate fileUploadDidBegin:theFileUpload];
+
+    [self didChange];
 }
 
 - (void)fileUploadProgressDidChange:(DCFileUpload)theFileUpload {
