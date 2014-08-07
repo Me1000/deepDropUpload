@@ -60,7 +60,10 @@ SharedFileUploadManager = nil;
 }
 
 - (void)fileUploadDidBegin:(DCFileUpload)theFileUpload {
-	[self didChange];
+    if ([delegate respondsToSelector:@selector(fileUploadDidBegin:)])
+        [delegate fileUploadDidBegin:theFileUpload];
+
+    [self didChange];
 }
 
 - (void)fileUploadProgressDidChange:(DCFileUpload)theFileUpload {
@@ -81,10 +84,16 @@ SharedFileUploadManager = nil;
 		[delegate fileUploadDidEnd:theFileUpload];
 }
 
-- (void)fileUpload:(DCFileUpload)anUpload didReceiveResponse:(CPString)aString
+- (void)fileUpload:(DCFileUpload)anUpload didReceiveResponse:(CPURLResponse)aResponse
 {
     if ([delegate respondsToSelector:@selector(fileUpload:didReceiveResponse:)])
-		[delegate fileUpload:self didReceiveResponse:aString];
+		[delegate fileUpload:anUpload didReceiveResponse:aResponse];
+}
+
+- (void)fileUpload:(DCFileUpload)anUpload didReceiveData:(CPString)aString
+{
+    if ([delegate respondsToSelector:@selector(fileUpload:didReceiveData:)])
+		[delegate fileUpload:anUpload didReceiveData:aString];
 }
 
 - (void)didChange {
